@@ -1,0 +1,2 @@
+# tritonus
+Javascript music theory
