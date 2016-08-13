@@ -2,15 +2,18 @@ let tt
 
 class Tritonus {
     constructor(notes) {
-        this.notes = notes
+        this.notes = []
+
+        for (let i = 0; i < notes.length; i++) {
+            if (Math.floor(notes[i]) != Math.ceil(notes[i]))
+                throw new Error('Invalid notes')
+
+            this.notes.push(notes[i])
+        }
     }
 
     transpose(interval) {
         return tt(this.notes.map(x => x + interval))
-    }
-
-    isValid() {
-        return this.notes.every(x => Math.floor(2 * x) === Math.ceil(2 * x))
     }
 }
 
