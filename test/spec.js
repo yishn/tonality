@@ -1,24 +1,24 @@
 const assert = require('assert')
-const tt = require('../index')
+const t = require('../index')
 
 describe('constructor', function() {
     it('should detect invalid notes', function() {
-        assert.throws(() => tt([0, 0.5, 1, 1.3]))
-        assert.throws(() => tt([0, 'blah', 1]))
+        assert.throws(() => t([0, 0.5, 1, 1.3]))
+        assert.throws(() => t([0, 'blah', 1]))
     })
 })
 
 describe('transpose', function() {
     it('should work', function() {
-        assert(tt.equals(
-            tt([0, 1, 2, 3, 4, 5, 6, 7, 8]).transpose(2),
-            tt([2, 3, 4, 5, 6, 7, 8, 9, 10])
+        assert(t.equals(
+            t([0, 1, 2, 3, 4, 5, 6, 7, 8]).transpose(2),
+            t([2, 3, 4, 5, 6, 7, 8, 9, 10])
         ))
     })
 })
 
 describe('render', function() {
-    let scale = tt([0, 2, 4, 5, 7, 9, 11])
+    let scale = t([0, 2, 4, 5, 7, 9, 11])
 
     it('should return right notes', function() {
         assert.equal(
@@ -50,12 +50,12 @@ describe('render', function() {
 
 describe('getAccidentals', function() {
     it('should return empty list for c', function() {
-        assert.deepEqual(tt.getAccidentals('c'), [])
+        assert.deepEqual(t.getAccidentals('c'), [])
     })
     it('should return right number of sharps', function() {
-        assert.equal(tt.getAccidentals('h').length, 5)
+        assert.equal(t.getAccidentals('h').length, 5)
     })
     it('should return right number of flats', function() {
-        assert.equal(tt.getAccidentals('ges').length, 6)
+        assert.equal(t.getAccidentals('ges').length, 6)
     })
 })

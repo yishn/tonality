@@ -1,6 +1,6 @@
-let tt
+let t
 
-class Tritonus {
+class Tonality {
     constructor(notes) {
         this.notes = []
 
@@ -13,12 +13,12 @@ class Tritonus {
     }
 
     transpose(interval) {
-        return tt(this.notes.map(x => x + interval))
+        return t(this.notes.map(x => x + interval))
     }
 
     render(key = 'c') {
         let notation = 'c+d+ef+g+a+b'
-        let accidentals = tt.getAccidentals(key)
+        let accidentals = t.getAccidentals(key)
 
         return this.notes.map((n, i) => {
             let mod = notation.length
@@ -70,16 +70,16 @@ class Tritonus {
     }
 }
 
-module.exports = tt = function(notes) {
-    return new Tritonus(notes)
+module.exports = t = function(notes) {
+    return new Tonality(notes)
 }
 
-tt.equals = function(t1, t2) {
+t.equals = function(t1, t2) {
     if (t1.notes.length != t2.notes.length) return false
     return t1.notes.every((n, i) => t2.notes[i] == n)
 }
 
-tt.getAccidentals = function(key) {
+t.getAccidentals = function(key) {
     let keys = ['ges', 'es', 'as', 'es', 'bes', 'f', 'c', 'g', 'd', 'a', 'e', 'h', 'fis']
     let sharps = 'fcgdae'.split('')
     let flats = 'beadgc'.split('')
