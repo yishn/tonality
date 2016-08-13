@@ -17,10 +17,12 @@ class Tonality {
                     x = x.slice(0, x.length - 1)
                 }
 
+                let doublesharp = x.slice(-4) == 'isis'
+                let doubleflat = x.slice(-4) == 'eses' || x == 'ases'
                 let sharp = x.slice(-2) == 'is'
                 let flat = x.slice(-2) == 'es' || x == 'as'
 
-                return index + 12 * octave + +sharp - +flat
+                return index + 12 * octave + +sharp + +doublesharp - +flat - +doubleflat
             })
         }
 

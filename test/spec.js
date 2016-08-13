@@ -8,6 +8,12 @@ describe('constructor', function() {
         assert(t.equals(t("d dis f ges gis"), t([2, 3, 5, 6, 8])))
         assert(t.equals(t("d' es, f,' g'' as"), t([14, -9, 5, 31, 8])))
     })
+    it('should not distinguish enharmonic equivalents', function() {
+        assert(t.equals(t("dis"), t("es")))
+        assert(t.equals(t("disis"), t("e")))
+        assert(t.equals(t("d"), t("eses")))
+        assert(t.equals(t("g"), t("ases")))
+    })
     it('should detect invalid notes', function() {
         assert.throws(() => t([0, 0.5, 1, 1.3]))
         assert.throws(() => t([0, 'blah', 1]))
