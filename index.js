@@ -64,3 +64,19 @@ tt.equals = function(t1, t2) {
     if (t1.notes.length != t2.notes.length) return false
     return t1.notes.every((n, i) => t2.notes[i] == n)
 }
+
+tt.getAccidentals = function(key) {
+    let keys = ['ges', 'es', 'as', 'es', 'bes', 'f', 'c', 'g', 'd', 'a', 'e', 'h', 'fis']
+    let sharps = 'fcgdae'.split('')
+    let flats = 'beadgc'.split('')
+    let index = keys.indexOf(key)
+
+    if (index < 0) return []
+    index -= 6
+
+    if (index > 0) {
+        return sharps.slice(0, index).map(x => x + 'is')
+    } else {
+        return flats.slice(0, -index).map(x => (x + 'es').replace(/(e|a)e/, '$1'))
+    }
+}
