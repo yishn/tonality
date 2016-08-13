@@ -16,3 +16,22 @@ describe('transpose', function() {
         ))
     })
 })
+
+describe('render', function() {
+    it('should return right notes', function() {
+        assert.equal(
+            tt([0, 2, 4, 5, 7, 9, 11]).render(),
+            'c d e f g a b'
+        )
+    })
+    it('should return right octave', function() {
+        assert.equal(
+            tt([0, 2, 4, 5, 7, 9, 11]).transpose(12).render(),
+            "c' d' e' f' g' a' b'"
+        )
+        assert.equal(
+            tt([0, 2, 4, 5, 7, 9, 11]).transpose(-24).render(),
+            "c,, d,, e,, f,, g,, a,, b,,"
+        )
+    })
+})
