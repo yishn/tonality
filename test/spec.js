@@ -57,6 +57,10 @@ describe('render', function() {
             scale.transpose(-2).render('bes'),
             'bes, c d es f g a'
         )
+        assert.equal(
+            scale.transpose(-2).render('gm'),
+            'bes, c d es f g a'
+        )
     })
 })
 
@@ -69,5 +73,18 @@ describe('getAccidentals', function() {
     })
     it('should return right number of flats', function() {
         assert.equal(t.getAccidentals('ges').length, 6)
+    })
+})
+
+describe('getDualKey', function() {
+    it('should return correct minor key', function() {
+        assert.equal(t.getDualKey('c'), 'am')
+        assert.equal(t.getDualKey('d'), 'bm')
+        assert.equal(t.getDualKey('e'), 'cism')
+    })
+    it('should return correct major key', function() {
+        assert.equal(t.getDualKey('cm'), 'es')
+        assert.equal(t.getDualKey('dm'), 'f')
+        assert.equal(t.getDualKey('desm'), 'e')
     })
 })

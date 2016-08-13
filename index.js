@@ -4,6 +4,8 @@ class Tonality {
     constructor(notes) {
         if (toString.call(notes) === '[object String]') {
             this.notes = notes.trim().split(/\s+/).map(x => {
+                x = x.toLowerCase()
+
                 let notation = 'c+d+ef+g+a+b'
                 let index = notation.indexOf(x[0])
                 let octave = 0
@@ -104,12 +106,16 @@ t.equals = function(t1, t2) {
 }
 
 t.getAccidentals = function(key) {
-    let keys = ['ges', 'es', 'as', 'es', 'bes', 'f', 'c', 'g', 'd', 'a', 'e', 'h', 'fis']
+    key = key.toLowerCase()
+
+    let keys = ['ges', 'des', 'as', 'es', 'bes', 'f', 'c', 'g', 'd', 'a', 'e', 'h', 'fis']
     let sharps = 'fcgdae'.split('')
     let flats = 'beadgc'.split('')
-    let index = keys.indexOf(key)
+    let minor = key.slice(-1) == 'm'
+    let index = keys.indexOf(key.replace('m', ''))
 
     if (index < 0) return []
+    if (minor) index = (index - 3 + keys.length - 1) % (keys.length - 1)
     index -= 6
 
     if (index > 0) {
@@ -117,4 +123,14 @@ t.getAccidentals = function(key) {
     } else {
         return flats.slice(0, -index).map(x => (x + 'es').replace(/(e|a)e/, '$1'))
     }
+}
+
+t.getDualKey = function(key) {
+    key = key.toLowerCase()
+
+    let minor = key.slice(-1) == 'm'
+    let note = t(key.replace('m', ''))
+    let dual = note.transpose(minor ? 3 : -3).render(key).replace(/[',]*$/, '')
+
+    return dual + (minor ? '' : 'm')
 }
