@@ -2,6 +2,28 @@ let t
 
 class Tonality {
     constructor(notes) {
+        if (toString.call(notes) === '[object String]') {
+            notes = notes.trim().split(/\s+/).map(x => {
+                let notation = 'c+d+ef+g+a+b'
+                let index = notation.indexOf(x[0])
+                let octave = 0
+
+                if (index < 0) throw new Error('Invalid notes')
+
+                while (["'", ','].includes(x.slice(-1))) {
+                    if (x.slice(-1) == "'") octave++
+                    else octave--
+
+                    x = x.slice(0, x.length - 1)
+                }
+
+                let sharp = x.slice(-2) == 'is'
+                let flat = x.slice(-2) == 'es' || x == 'as'
+
+                return index + 12 * octave + +sharp - +flat
+            })
+        }
+
         this.notes = []
 
         for (let i = 0; i < notes.length; i++) {

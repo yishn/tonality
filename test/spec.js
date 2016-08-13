@@ -2,6 +2,12 @@ const assert = require('assert')
 const t = require('../index')
 
 describe('constructor', function() {
+    it('should parse notation', function() {
+        assert(t.equals(t("d e fis g"), t([2, 4, 6, 7])))
+        assert(t.equals(t("d es f g as"), t([2, 3, 5, 7, 8])))
+        assert(t.equals(t("d dis f ges gis"), t([2, 3, 5, 6, 8])))
+        assert(t.equals(t("d' es, f,' g'' as"), t([14, -9, 5, 31, 8])))
+    })
     it('should detect invalid notes', function() {
         assert.throws(() => t([0, 0.5, 1, 1.3]))
         assert.throws(() => t([0, 'blah', 1]))
