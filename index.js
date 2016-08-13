@@ -16,10 +16,11 @@ class Tritonus {
         return tt(this.notes.map(x => x + interval))
     }
 
-    render(context) {
+    render(key = 'c') {
         let notation = 'c+d+ef+g+a+b'
+        let accidentals = tt.getAccidentals(key)
 
-        return this.notes.map(n => {
+        return this.notes.map((n, i) => {
             let mod = notation.length
             let octave = 0
             let norm = n
@@ -36,9 +37,22 @@ class Tritonus {
             }
 
             if (notation[norm] != '+') {
-                result += notation[norm]
+                if (key == 'fis' && notation[norm] == 'f') {
+                    result += 'eis'
+                } else if (key == 'ges' && notation[norm] == 'b') {
+                    result += 'ces'
+                } else {
+                    result += notation[norm]
+                }
             } else {
-                result += notation[norm - 1] + 'is'
+                let sharp = notation[norm - 1] + 'is'
+                let flat = (notation[norm + 1] + 'es').replace(/(e|a)e/, '$1')
+
+                if (accidentals.includes(flat)) {
+                    result += flat
+                } else {
+                    result += sharp
+                }
             }
 
             while (octave < 0) {
