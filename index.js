@@ -38,6 +38,10 @@ class Tonality {
         }
     }
 
+    clone() {
+        return t(this.notes)
+    }
+
     transpose(interval) {
         return t(this.notes.map(x => x + interval))
     }
