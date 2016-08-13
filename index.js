@@ -3,7 +3,7 @@ let t
 class Tonality {
     constructor(notes) {
         if (toString.call(notes) === '[object String]') {
-            notes = notes.trim().split(/\s+/).map(x => {
+            this.notes = notes.trim().split(/\s+/).map(x => {
                 let notation = 'c+d+ef+g+a+b'
                 let index = notation.indexOf(x[0])
                 let octave = 0
@@ -24,15 +24,15 @@ class Tonality {
 
                 return index + 12 * octave + +sharp + +doublesharp - +flat - +doubleflat
             })
-        }
+        } else {
+            this.notes = []
 
-        this.notes = []
+            for (let i = 0; i < notes.length; i++) {
+                if (Math.floor(notes[i]) != Math.ceil(notes[i]))
+                    throw new Error('Invalid notes')
 
-        for (let i = 0; i < notes.length; i++) {
-            if (Math.floor(notes[i]) != Math.ceil(notes[i]))
-                throw new Error('Invalid notes')
-
-            this.notes.push(notes[i])
+                this.notes.push(notes[i])
+            }
         }
     }
 
