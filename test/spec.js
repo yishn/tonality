@@ -64,6 +64,15 @@ describe('render', function() {
     })
 })
 
+describe('getInterval', function() {
+    it('should work', function() {
+        assert.equal(t.getInterval('c', 'd'), 2)
+        assert.equal(t.getInterval('c', "c'"), 12)
+        assert.equal(t.getInterval('c', "c,"), -12)
+        assert.equal(t.getInterval('fis', "c"), -6)
+    })
+})
+
 describe('getAccidentals', function() {
     it('should return empty list for c', function() {
         assert.deepEqual(t.getAccidentals('c'), [])

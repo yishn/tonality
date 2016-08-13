@@ -2,7 +2,9 @@ let t
 
 class Tonality {
     constructor(notes) {
-        if (toString.call(notes) === '[object String]') {
+        if (notes instanceof Tonality) {
+            this.notes = notes.clone().notes
+        } else if (toString.call(notes) === '[object String]') {
             this.notes = notes.trim().split(/\s+/).map(x => {
                 x = x.toLowerCase()
 
@@ -107,6 +109,11 @@ module.exports = t = function(notes) {
 t.equals = function(t1, t2) {
     if (t1.notes.length != t2.notes.length) return false
     return t1.notes.every((n, i) => t2.notes[i] == n)
+}
+
+t.getInterval = function(n1, n2) {
+    let t1 = t(n1), t2 = t(n2)
+    return t2.notes[0] - t1.notes[0]
 }
 
 t.getAccidentals = function(key) {
