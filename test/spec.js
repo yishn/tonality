@@ -8,6 +8,9 @@ describe('constructor', function() {
         assert(t.equals(t("d dis f ges gis"), t([2, 3, 5, 6, 8])))
         assert(t.equals(t("d' es, f,' g'' as"), t([14, -9, 5, 31, 8])))
     })
+    it('should be idempotent', function() {
+        assert(t.equals(t(t([0, 5, 10])), t([0, 5, 10])))
+    })
     it('should not distinguish enharmonic equivalents', function() {
         assert(t.equals(t("dis"), t("es")))
         assert(t.equals(t("disis"), t("e")))
