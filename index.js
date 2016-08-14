@@ -125,17 +125,14 @@ t.getAccidentals = function(key) {
     let sharps = 'fcgdae'.split('')
     let flats = 'beadgc'.split('')
     let minor = key.slice(-1) == 'm'
-    let index = keys.indexOf(key.replace('m', ''))
+    let index = keys.indexOf(key.replace('m', '').replace(/[',]*$/, ''))
 
     if (index < 0) return []
     if (minor) index = (index - 3 + keys.length - 1) % (keys.length - 1)
     index -= 6
 
-    if (index > 0) {
-        return sharps.slice(0, index).map(x => x + 'is')
-    } else {
-        return flats.slice(0, -index).map(x => (x + 'es').replace(/(e|a)e/, '$1'))
-    }
+    if (index > 0) return sharps.slice(0, index).map(x => x + 'is')
+    return flats.slice(0, -index).map(x => (x + 'es').replace(/(e|a)e/, '$1'))
 }
 
 t.getDualKey = function(key) {
