@@ -1,3 +1,5 @@
+const helper = require('./helper')
+
 let t
 
 class Tonality {
@@ -218,15 +220,8 @@ t.getScale = function(key, shift = 0) {
         transpose = t.getSemitones('c', key)
     }
 
-    scale = scale.transpose(transpose)
-
-    if (shift > 0) {
-        cut = scale.notes.splice(0, shift).map(x => x + 12)
-        scale.notes.push(...cut)
-    } else if (shift < 0) {
-        cut = scale.notes.splice(shift, -shift).map(x => x - 12)
-        scale.notes.unshift(...cut)
-    }
+    let notes = scale.transpose(transpose).notes
+    scale = t(helper.shift(notes, shift))
 
     return scale
 }

@@ -10,11 +10,11 @@ describe('helper', function() {
             assert.deepEqual(a, b)
             assert.notEqual(a, b)
         })
-        it('shifts head of an array to the end', function() {
-            assert.deepEqual(helper.shift([0, 1, 2, 3, 4], 2), [2, 3, 4, 0, 1])
+        it('shifts head of an array to the end an octave higher', function() {
+            assert.deepEqual(helper.shift([0, 1, 2, 3, 4], 2), [2, 3, 4, 12, 13])
         })
-        it('shifts tail of an array to the start', function() {
-            assert.deepEqual(helper.shift([0, 1, 2, 3, 4], -2), [3, 4, 0, 1, 2])
+        it('shifts tail of an array to the start an octave lower', function() {
+            assert.deepEqual(helper.shift([0, 1, 2, 3, 4], -2), [-9, -8, 0, 1, 2])
         })
     })
 })
