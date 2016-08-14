@@ -5,7 +5,7 @@ let t
 class Tonality {
     constructor(notes) {
         if (notes instanceof Tonality) {
-            this.notes = notes.clone().notes
+            this.notes = notes.notes
         } else if (toString.call(notes) === '[object Number]') {
             this.notes = [notes]
         } else if (toString.call(notes) === '[object String]') {
@@ -118,9 +118,15 @@ module.exports = t = function(notes) {
     return new Tonality(notes)
 }
 
-t.equals = function(t1, t2) {
+t.equals = function(x, y) {
+    let t1 = t(x), t2 = t(y)
     if (t1.notes.length != t2.notes.length) return false
     return t1.notes.every((n, i) => t2.notes[i] == n)
+}
+
+t.concat = function(x, y) {
+    let t1 = t(x), t2 = t(y)
+    return t([...t1.notes, ...t2.notes])
 }
 
 t.interval2semitones = function(interval) {
@@ -176,8 +182,8 @@ t.interval2semitones = function(interval) {
     return sign * semitones
 }
 
-t.getSemitones = function(n1, n2) {
-    let t1 = t(n1), t2 = t(n2)
+t.getSemitones = function(x, y) {
+    let t1 = t(x), t2 = t(y)
     return t2.notes[0] - t1.notes[0]
 }
 
