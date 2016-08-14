@@ -117,7 +117,7 @@ t.equals = function(t1, t2) {
     return t1.notes.every((n, i) => t2.notes[i] == n)
 }
 
-t.getInterval = function(n1, n2) {
+t.getSemitones = function(n1, n2) {
     let t1 = t(n1), t2 = t(n2)
     return t2.notes[0] - t1.notes[0]
 }
@@ -155,10 +155,10 @@ t.getScale = function(key, shift = 0) {
 
     if (minor) {
         scale = t.getScale(t.getDualKey(key), -2)
-        transpose = t.getInterval(scale.notes[0], key.replace('m', ''))
+        transpose = t.getSemitones(scale.notes[0], key.replace('m', ''))
     } else {
         scale = t([0, 2, 4, 5, 7, 9, 11])
-        transpose = t.getInterval('c', key)
+        transpose = t.getSemitones('c', key)
     }
 
     scale = scale.transpose(transpose)

@@ -89,12 +89,12 @@ describe('render', function() {
     })
 })
 
-describe('getInterval', function() {
+describe('getSemitones', function() {
     it('should work', function() {
-        assert.equal(t.getInterval('c', 'd'), 2)
-        assert.equal(t.getInterval('c', "c'"), 12)
-        assert.equal(t.getInterval('c', "c,"), -12)
-        assert.equal(t.getInterval('fis', "c"), -6)
+        assert.equal(t.getSemitones('c', 'd'), 2)
+        assert.equal(t.getSemitones('c', "c'"), 12)
+        assert.equal(t.getSemitones('c', "c,"), -12)
+        assert.equal(t.getSemitones('fis', "c"), -6)
     })
 })
 
