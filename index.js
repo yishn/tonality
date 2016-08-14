@@ -4,6 +4,8 @@ class Tonality {
     constructor(notes) {
         if (notes instanceof Tonality) {
             this.notes = notes.clone().notes
+        } else if (toString.call(notes) === '[object Number]') {
+            this.notes = [notes]
         } else if (toString.call(notes) === '[object String]') {
             this.notes = notes.trim().split(/\s+/).map(x => {
                 x = x.toLowerCase()
