@@ -33,6 +33,25 @@ describe('transpose', function() {
             t([2, 3, 4, 5, 6, 7, 8, 9, 10])
         ))
     })
+    it('should not mutate object', function() {
+        let scale = t([0, 1, 2, 3, 4, 5, 6, 7, 8])
+        scale.transpose(2)
+        assert(t.equals(scale, t([0, 1, 2, 3, 4, 5, 6, 7, 8])))
+    })
+})
+
+describe('reverse', function() {
+    it('should work', function() {
+        assert(t.equals(
+            t([0, 1, 2, 3, 4, 5, 6, 7, 8]).reverse(),
+            t([8, 7, 6, 5, 4, 3, 2, 1, 0])
+        ))
+    })
+    it('should not mutate object', function() {
+        let scale = t([0, 1, 2, 3, 4, 5, 6, 7, 8])
+        scale.reverse()
+        assert(t.equals(scale, t([0, 1, 2, 3, 4, 5, 6, 7, 8])))
+    })
 })
 
 describe('render', function() {

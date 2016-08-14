@@ -46,8 +46,12 @@ class Tonality {
         return t(this.notes)
     }
 
-    transpose(interval) {
-        return t(this.notes.map(x => x + interval))
+    transpose(semitones) {
+        return t(this.notes.map(x => x + semitones))
+    }
+
+    reverse() {
+        return t(this.notes.slice(0).reverse())
     }
 
     render(key = 'c') {
