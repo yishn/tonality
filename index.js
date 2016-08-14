@@ -46,8 +46,12 @@ class Tonality {
         return t(this.notes)
     }
 
-    transpose(semitones) {
-        return t(this.notes.map(x => x + semitones))
+    transpose(interval) {
+        if (toString.call(interval) === '[object String]') {
+            interval = t.interval2semitones(interval)
+        }
+
+        return t(this.notes.map(x => x + interval))
     }
 
     reverse() {
@@ -115,6 +119,59 @@ module.exports = t = function(notes) {
 t.equals = function(t1, t2) {
     if (t1.notes.length != t2.notes.length) return false
     return t1.notes.every((n, i) => t2.notes[i] == n)
+}
+
+t.interval2semitones = function(interval) {
+    let sign = 1
+    let error = new Error('Invalid interval')
+
+    if (interval[0] == '-') {
+        sign = -1
+        interval = interval.slice(1)
+    }
+
+    if (interval.toUpperCase() == 'TT') return sign * 6
+
+    let number = !isNaN(interval) ? +interval : +interval.slice(1)
+    if (isNaN(number)) throw error
+
+    let norm = number % 7
+    if (norm == 0) norm = 7
+
+    if ([1, 4, 5].includes(norm)) {
+        let data = {'1': 0, '4': 5, '5': 7}
+        let semitones = (number - norm) * 12 / 7 + data[norm]
+
+        if (interval[0].toLowerCase() == 'd') {
+            // Diminished
+            semitones--
+        } else if (interval[0].toUpperCase() == 'A') {
+            // Augmented
+            semitones++
+        } else if (interval[0].toUpperCase() == 'M') {
+            throw error
+        }
+
+        return sign * semitones
+    }
+
+    let data = {'2': 1, '3': 3, '6': 8, '7': 10}
+    let semitones = (number - norm) * 12 / 7 + data[norm]
+
+    if (interval[0] == 'M') {
+        // Major
+        semitones++
+    } else if (interval[0].toLowerCase() == 'd') {
+        // Diminished
+        semitones--
+    } else if (interval[0].toUpperCase() == 'A') {
+        // Augmented
+        semitones += 2
+    } else if (interval[0] != 'm') {
+        throw error
+    }
+
+    return sign * semitones
 }
 
 t.getSemitones = function(n1, n2) {

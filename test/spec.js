@@ -89,6 +89,49 @@ describe('render', function() {
     })
 })
 
+describe('interval2semitones', function() {
+    it('should handle perfect intervals', function() {
+        assert.equal(t.interval2semitones('P1'), 0)
+        assert.equal(t.interval2semitones('P4'), 5)
+        assert.equal(t.interval2semitones('P5'), 7)
+        assert.equal(t.interval2semitones('P8'), 12)
+        assert.equal(t.interval2semitones('P11'), 17)
+
+        assert.equal(t.interval2semitones('1'), 0)
+        assert.equal(t.interval2semitones('4'), 5)
+        assert.equal(t.interval2semitones('5'), 7)
+        assert.equal(t.interval2semitones('8'), 12)
+        assert.equal(t.interval2semitones('11'), 17)
+    })
+    it('should handle minor/major intervals', function() {
+        assert.equal(t.interval2semitones('m2'), 1)
+        assert.equal(t.interval2semitones('M2'), 2)
+        assert.equal(t.interval2semitones('m7'), 10)
+        assert.equal(t.interval2semitones('M7'), 11)
+        assert.equal(t.interval2semitones('m16'), 25)
+    })
+    it('should handle dimished/augmented intervals', function() {
+        assert.equal(t.interval2semitones('A2'), 3)
+        assert.equal(t.interval2semitones('d3'), 2)
+        assert.equal(t.interval2semitones('d8'), 11)
+        assert.equal(t.interval2semitones('A5'), 8)
+        assert.equal(t.interval2semitones('d14'), 21)
+        assert.equal(t.interval2semitones('A7'), 12)
+    })
+    it('should handle negative intervals', function() {
+        assert.equal(t.interval2semitones('-P4'), -5)
+        assert.equal(t.interval2semitones('-m7'), -10)
+        assert.equal(t.interval2semitones('-A5'), -8)
+        assert.equal(t.interval2semitones('-d14'), -21)
+    })
+    it('should handle tritone', function() {
+        assert.equal(t.interval2semitones('TT'), 6)
+        assert.equal(t.interval2semitones('TT'), t.interval2semitones('d5'))
+        assert.equal(t.interval2semitones('TT'), t.interval2semitones('A4'))
+        assert.equal(t.interval2semitones('-TT'), -6)
+    })
+})
+
 describe('getSemitones', function() {
     it('should work', function() {
         assert.equal(t.getSemitones('c', 'd'), 2)
