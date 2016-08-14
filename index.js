@@ -225,3 +225,10 @@ t.getScale = function(key, shift = 0) {
 
     return scale
 }
+
+t.getChord = function(key, shift = 0) {
+    let scale = t.getScale(key)
+    let notes = helper.shift([0, 2, 4].map(x => scale.notes[x]), shift)
+
+    return t(notes)
+}

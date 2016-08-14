@@ -181,4 +181,19 @@ describe('Tonality', function() {
             assert.equal(t.getScale("d'm", -2).render('d,m'), "bes c' d' e' f' g' a'")
         })
     })
+
+    describe('getChord', function(){
+        it('should return major chord', function() {
+            assert.equal(t.getChord('c').render('c'), 'c e g')
+            assert.equal(t.getChord('a,').render('a'), 'a, cis e')
+        })
+        it('should return minor chord', function() {
+            assert.equal(t.getChord('cm').render('cm'), 'c es g')
+            assert.equal(t.getChord('a,m').render('am'), 'a, c e')
+        })
+        it('should handle shifts', function() {
+            assert.equal(t.getChord('cm', 1).render('cm'), "es g c'")
+            assert.equal(t.getChord('a,m', -2).render('am'), 'c, e, a,')
+        })
+    })
 })
