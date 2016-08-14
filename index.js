@@ -144,3 +144,28 @@ t.getDualKey = function(key) {
 
     return dual + (minor ? '' : 'm')
 }
+
+t.getScale = function(key, shift = 0) {
+    let scale, cut, transpose
+    let minor = key.slice(-1) == 'm'
+
+    if (minor) {
+        scale = t.getScale(t.getDualKey(key), -2)
+        transpose = t.getInterval(scale.notes[0], key.replace('m', ''))
+    } else {
+        scale = t([0, 2, 4, 5, 7, 9, 11])
+        transpose = t.getInterval('c', key)
+    }
+
+    scale = scale.transpose(transpose)
+
+    if (shift > 0) {
+        cut = scale.notes.splice(0, shift).map(x => x + 12)
+        scale.notes.push(...cut)
+    } else if (shift < 0) {
+        cut = scale.notes.splice(shift, -shift).map(x => x - 12)
+        scale.notes.unshift(...cut)
+    }
+
+    return scale
+}

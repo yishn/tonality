@@ -103,3 +103,18 @@ describe('getDualKey', function() {
         assert.equal(t.getDualKey('desm'), 'e')
     })
 })
+
+describe('getScale', function() {
+    it('should return major scale', function() {
+        assert.equal(t.getScale('c,').render('c,'), 'c, d, e, f, g, a, b,')
+        assert.equal(t.getScale('d,').render('d,'), 'd, e, fis, g, a, b, cis')
+    })
+    it('should return natural minor scale', function() {
+        assert.equal(t.getScale('c,m').render('c,m'), 'c, d, es, f, g, as, bes,')
+        assert.equal(t.getScale('d,m').render('d,m'), 'd, e, f, g, a, bes, c')
+    })
+    it('should handle scale shifts', function() {
+        assert.equal(t.getScale('c,m', 1).render('c,m'), 'd, es, f, g, as, bes, c')
+        assert.equal(t.getScale("d'm", -2).render('d,m'), "bes c' d' e' f' g' a'")
+    })
+})
